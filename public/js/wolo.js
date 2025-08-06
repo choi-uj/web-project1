@@ -2,34 +2,34 @@ gsap.registerPlugin(ScrollTrigger)
 
 
 
-/* 헤더 */
-const headerGnb = document.querySelector('#gnb');
-const header = document.querySelector('header');
-const gnbDep1 = document.querySelectorAll('#gnb .dep1>li');
-const menu = document.querySelector('.header-util .menu-wrap');
-const langWrap = document.querySelector('.header-util .lang-wrap');
-const langBtn = document.querySelector('.header-util .lang-wrap button');
-const hBreakpoint = 1440;
+// /* 헤더 */
+// const headerGnb = document.querySelector('#gnb');
+// const header = document.querySelector('header');
+// const gnbDep1 = document.querySelectorAll('#gnb .dep1>li');
+// const menu = document.querySelector('.header-util .menu-wrap');
+// const langWrap = document.querySelector('.header-util .lang-wrap');
+// const langBtn = document.querySelector('.header-util .lang-wrap button');
+// const hBreakpoint = 1440;
 
-// 메뉴 상태가 변경된 직후 DOM을 강제로 갱신하여 반영하도록 합니다.
-const toggleMenu = () => {
-    menu.classList.toggle('open');
-    if (menu.classList.contains('open')) {
-        header.classList.add('scroll');
-        header.classList.add('scroll-a');
-    } else {
-        header.classList.remove('scroll-a');
-        if (window.scrollY >= header.offsetHeight) {
-            header.classList.add('scroll');
-        } else {
-            header.classList.remove('scroll');
-        }
-    }
-};
+// // 메뉴 상태가 변경된 직후 DOM을 강제로 갱신하여 반영하도록 합니다.
+// const toggleMenu = () => {
+//     menu.classList.toggle('open');
+//     if (menu.classList.contains('open')) {
+//         header.classList.add('scroll');
+//         header.classList.add('scroll-a');
+//     } else {
+//         header.classList.remove('scroll-a');
+//         if (window.scrollY >= header.offsetHeight) {
+//             header.classList.add('scroll');
+//         } else {
+//             header.classList.remove('scroll');
+//         }
+//     }
+// };
 
-menu.addEventListener('click', toggleMenu);
+// menu.addEventListener('click', toggleMenu);
 
-// 반응형 처리
+// // 반응형 처리
 // if (window.innerWidth >= hBreakpoint) {
 //     headerGnb.addEventListener('mouseenter', function() {
 //         header.classList.add('scroll-a');
@@ -89,13 +89,13 @@ menu.addEventListener('click', toggleMenu);
 //     });
 // }
 
-window.addEventListener('resize', function() {
-    if (window.innerWidth >= hBreakpoint) {
-        // 큰 화면에 대한 처리
-    } else {
-        // 작은 화면에 대한 처리
-    }
-});
+// window.addEventListener('resize', function() {
+//     if (window.innerWidth >= hBreakpoint) {
+//         // 큰 화면에 대한 처리
+//     } else {
+//         // 작은 화면에 대한 처리
+//     }
+// });
 
 /* 푸터 */
 const familyBtn = document.querySelector('.family-link .family-site button')
@@ -105,18 +105,19 @@ familyBtn.addEventListener('click', function() {
 })
 
 /* 섹션 */
-const section = gsap.utils.toArray('#main-page section');
-// => Node List 형태의 유사 배열을 배열로 변환
-
-gsap.from(section, {
-    y: 100,
-    opacity: 0,
-    duration: 0.5,
-    scrollTrigger: {
-        trigger: section,
-        start: 'top 70%',
-        once: true,  // 한번만 실행
-    }
+// 예시: useEffect를 제거하고 DOM을 직접 조작
+document.addEventListener("DOMContentLoaded", function () {
+    const section = gsap.utils.toArray('#main-page section');
+    gsap.from(section, {
+        y: 100,
+        opacity: 0,
+        duration: 0.5,
+        scrollTrigger: {
+            trigger: section,
+            start: 'top 70%',
+            once: true,  // 한번만 실행
+        }
+    });
 });
 
 /* 메인비주얼 */
@@ -272,16 +273,7 @@ gsap.from(section, {
 //     }
 // });
 
-gsap.from('.history li', {
-    opacity: 0,
-    x: 1000,
-    duration: 0.3,
-    scrollTrigger: {
-        trigger: '.history',
-        start: 'top center',
-        toggleActions: 'play none none none', // 스크롤시 한번만 실행
-    }
-});
+
 history.from('.history li:nth-child(1)', {opacity: 0, x: 1000, duration: 0.3})    
         .from('.history li:nth-child(2)', {opacity: 0, x: 1000, duration: 0.3}) 
         .from('.history li:nth-child(3)', {opacity: 0, x: 1000, duration: 0.3}) 

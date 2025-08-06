@@ -1,5 +1,5 @@
 // Footer.jsx
-import React from "react";
+import React, { useState } from "react";
 
 function Footer() {
     const [isFamilySiteOpen, setFamilySiteOpen] = useState(false);
@@ -21,16 +21,22 @@ function Footer() {
                     </address>
                     <div className="family-link">
                         <div className="family-site">
-                            <button>FAMILY SITE</button>
-                            <ul>
+                        <button onClick={toggleFamilySite}>FAMILY SITE</button>
+                            <ul className={isFamilySiteOpen ? "active" : ""}>
                                 <li><a href="https://brand.naver.com/vendict?" target="_blank">VENDICT</a></li>
                                 <li><a href="https://smartstore.naver.com/wallowshop?" target="_blank">WALLOW</a></li>
                             </ul>
                         </div>
                         <div className="footer-sns">
-                            <a href="https://www.youtube.com/@vendict_official" target="_blank"><span className="blind">YouTube</span></a>
-                            <a href="https://www.instagram.com/vendict_official/" target="_blank"><span className="blind">Instagram</span></a>
-                            <a href="https://blog.naver.com/carbelief" target="_blank"><span className="blind">Blog</span></a>
+                            <a href="https://www.youtube.com/@vendict_official" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
+                                <span className="blind">YouTube</span>
+                            </a>
+                            <a href="https://www.instagram.com/vendict_official/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                                <span className="blind">Instagram</span>
+                            </a>
+                            <a href="https://blog.naver.com/carbelief" target="_blank" rel="noopener noreferrer" aria-label="Blog">
+                                <span className="blind">Blog</span>
+                            </a>
                         </div>
                     </div>
                 </div>
