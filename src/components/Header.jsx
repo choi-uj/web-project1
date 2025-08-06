@@ -2,44 +2,55 @@
 import React, { useState, useEffect, useRef } from "react";
 
 function Header() {
-    const [isOpen, setIsOpen] = useState(false);
+    const [menuOpen, setMenuOpen] = useState(false); // 메뉴 버튼 열림 여부
     const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 1440);
+    const [isScrolled, setIsScrolled] = useState(false); // 스크롤 여부 상태
     const headerRef = useRef(null);
     const gnbRef = useRef(null);
     const langWrapRef = useRef(null);
     const hBreakpoint = 1440;
 
-    // 메뉴 토글
-    // const toggleMenu = () => {
-    //     setIsOpen(prev => !prev);
-    // };
     const toggleMenu = () => {
-            console.log('menu clicked');
-            setIsOpen(prev => {
-                console.log('isOpen 상태:', !prev);
-                return !prev;
-            });
-        };
+        const header = headerRef.current;
+        setMenuOpen(prev => {
+            const newState = !prev;
 
-    // 언어 선택 토글
+            if (header) {
+                if (newState) {
+                    header.classList.add('scroll');
+                    header.classList.add('scroll-a');
+                } else {
+                    if (window.scrollY < header.offsetHeight) {
+                        header.classList.remove('scroll');
+                    }
+                    header.classList.remove('scroll-a');
+                }
+            }
+
+            return newState;
+        });
+    };
+
     const toggleLang = () => {
         if (langWrapRef.current) {
             langWrapRef.current.classList.toggle('active');
         }
     };
 
-    // 스크롤 처리
     const handleScroll = () => {
         const header = headerRef.current;
         if (!header) return;
-        if (window.scrollY >= header.offsetHeight) {
+
+        const shouldScroll = window.scrollY >= header.offsetHeight;
+        setIsScrolled(shouldScroll); // 상태 업데이트
+
+        if (shouldScroll) {
             header.classList.add('scroll');
         } else {
             header.classList.remove('scroll');
         }
     };
 
-    // 반응형 처리 및 마우스 이벤트
     useEffect(() => {
         const handleResize = () => {
             setIsDesktop(window.innerWidth >= hBreakpoint);
@@ -47,10 +58,10 @@ function Header() {
 
         const header = headerRef.current;
         const gnb = gnbRef.current;
-        
-        // 스크롤 이벤트
+
         window.addEventListener('scroll', handleScroll);
         window.addEventListener('resize', handleResize);
+
         if (isDesktop && gnb) {
             const onMouseEnter = () => {
                 header.classList.add('scroll', 'scroll-a');
@@ -78,40 +89,44 @@ function Header() {
         };
     }, [isDesktop]);
 
-    return(
-        <header id="header" ref={headerRef}>
+    return (
+        <header
+            id="header"
+            ref={headerRef}
+            className={`${isScrolled ? 'scroll' : ''} ${menuOpen ? 'scroll-a' : ''}`}
+        >
             <div className="container">
                 <h1><a href="/"><span className="blind">워로브라더스</span></a></h1>
                 <nav id="gnb" ref={gnbRef}>
                     <ul className="dep1">
                         <li><a href="#go-history">Company</a>
                             <ul className="dep2">
-                                <li><a href="#" tabIndex="-1">핵심 가치</a></li>
-                                <li><a href="#" tabIndex="-1">연혁</a></li>
-                                <li><a href="#" tabIndex="-1">사업장 안내</a></li>
+                                <li><a href="#">핵심 가치</a></li>
+                                <li><a href="#">연혁</a></li>
+                                <li><a href="#">사업장 안내</a></li>
                             </ul>
                         </li>
                         <li><a href="#go-brand">Brand</a>
                             <ul className="dep2">
-                                <li><a href="#" tabIndex="-1">벤딕트</a></li>
-                                <li><a href="#" tabIndex="-1">왈로우</a></li>
+                                <li><a href="#">벤딕트</a></li>
+                                <li><a href="#">왈로우</a></li>
                             </ul>
                         </li>
                         <li><a href="#go-vision">Vision</a>
                             <ul className="dep2">
-                                <li><a href="#" tabIndex="-1">일하는 방식</a></li>
-                                <li><a href="#" tabIndex="-1">회사 블로그</a></li>
+                                <li><a href="#">일하는 방식</a></li>
+                                <li><a href="#">회사 블로그</a></li>
                             </ul>
                         </li>
                         <li><a href="#go-news">PR center</a>
                             <ul className="dep2">
-                                <li><a href="#" tabIndex="-1">뉴스</a></li>
-                                <li><a href="#" tabIndex="-1">직원 인터뷰</a></li>
+                                <li><a href="#">뉴스</a></li>
+                                <li><a href="#">직원 인터뷰</a></li>
                             </ul>
                         </li>
                         <li><a href="#go-hiring">HR</a>
                             <ul className="dep2">
-                                <li><a href="./sub1-hr-office.html" tabIndex="-1">오피스 투어</a></li>
+                                <li><a href="./sub1-hr-office.html">오피스 투어</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -128,7 +143,7 @@ function Header() {
                         </ul>
                     </div>
                     <div className="allmenu-wrap">
-                        <div className={`menu-wrap ${isOpen ? 'open' : ''}`} onClick={toggleMenu}>
+                        <div className={`menu-wrap ${menuOpen ? 'open' : ''}`} onClick={toggleMenu}>
                             <span className="line"></span>
                             <span className="line"></span>
                             <span className="line"></span>
