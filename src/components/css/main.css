@@ -447,7 +447,7 @@ header::before {
     /* border: 1px solid #ff0000; */
 }
 .main-swiper {
-    display: flex;
+    display: flex;position: relative;
     width: 100vw;height: 100vh;
     color: #fff;
 }
@@ -455,45 +455,43 @@ header::before {
     object-fit: cover;
     width: 100%;height: 100%;
 }
-
 .main-swiper .swiper-controls {
     position: absolute;top: 55%;left: 50%;
-    transform: translateX(-50%);z-index: 10;
+    transform: translateX(-50%);z-index: 20;
     display: flex;flex-direction: column;
     width: 40rem; /* 부모 너비 */
     height: 10rem;
     align-items: center;
     justify-content: center;
+    /* border: 1px solid #ff7b7b; */
 }
 .main-swiper .progress-bar {
     width: 100%; /* 부모(18rem) 내에서 꽉 참 */
-    height: 1px;background: rgba(255, 255, 255, 0.3);
+    height: 2px;
+    background: rgba(255, 255, 255, 0.3);
     border-radius: 2px;
     overflow: hidden;  /* 변경: overflow visible -> hidden */
     position: relative;
+    
 }
 
 .main-swiper .progress-inner {
     width: 0;height: 100%;
-    background: #fff;transition: width 0.1s ease;
+    background: #fff;transition: width 0.2s ease;
     position: absolute; /* 변경: relative -> absolute */
     top: 0;left: 0;
 }
 
-/* @keyframes progressAnim {
-    from { transform: translateX(-100%); }
-    to { transform: translateX(100%); }
-} */
 .swiper-controls .inner-controls {
     display: flex;flex-direction: row;position: relative;
     width: 50%;height: 100%;
-    align-items: center;justify-content: end;
+    align-items: center;justify-content: start;
 }
 .swiper-controls .swiper-pagination {
-    display: flex;flex-direction: row;position: absolute;
-    top: 35%;left: 10%;
+    position: relative;padding-top: 1.5rem;
+    display: flex;flex-direction: row;
     gap: 1.2rem;width: 12rem;height: 3rem;
-    justify-content: center;align-items: center;  
+    justify-content: center;align-items: center;
 }
 .swiper-controls .swiper-pagination span {
     width: 1.5rem;height: 1.5rem;border-radius: 50%;
@@ -510,7 +508,13 @@ header::before {
     font-size: 3rem;font-weight: 500;cursor: pointer;
     display: flex;justify-content: center;align-items: center;
     width: 50px;height: 50px;
+    pointer-events: auto; /* 버튼만 클릭 가능하게 */
     border-radius: 50%;z-index: 20;
+}
+.swiper-controls button:focus,
+.swiper-controls button:active {
+    outline: none;
+    box-shadow: none;
 }
 .swiper-controls .btn-play {
     display: none;
@@ -519,7 +523,7 @@ header::before {
     content: "\F009";font-family: 'remixicon';
 }
 .swiper-controls .btn-stop {
-    display: flex;
+    display: flex !important;
 }
 .swiper-controls .btn-stop::after {
     content: "\EFD6";font-family: 'remixicon';
@@ -744,6 +748,7 @@ header::before {
 
 /* 비전 */
 .way {background: #efefef;overflow-x: hidden;}
+.way, .container {max-width: 100%;overflow-x: hidden;}
 .way-main {position: relative;height: 100%;padding: 10rem 0;}
 /* .way-swiper {width: 100%;height: 100%;margin: auto;} */
 .way-swiper.swiper {width: 100%;height: auto;margin: auto;overflow: hidden;}
@@ -755,7 +760,7 @@ header::before {
     display: flex;flex-shrink: 0; /* 추가 */
     justify-content: center;align-items: center;
     margin-top: 10rem;
-    width: 30rem !important; /* 중요: auto 설정을 위해 명시적으로 선언 */
+    width: 30rem; 
     height: 30rem;
     /* background-size: cover;
     background-position: center; */
@@ -806,16 +811,34 @@ header::before {
 .way-2p .txt strong {font-size: 3rem;font-weight: 800;line-height: 4rem;}
 .way-2p .txt span {font-size: 2rem;line-height: 3rem;}
 
+.way-1p, .way-2p {
+  min-height: 50vh; /* 또는 필요 시 60vh 이상 */
+}
+.way-1p img, .way-2p img {
+  opacity: 0;
+  transform: scale(0.95);
+}
+.way-1p .txt, .way-2p .txt {
+  opacity: 0;
+  transform: translateX(100px); /* or -100px */
+}
 @media screen and (max-width: 1280px) {
     .way-main strong br {display: none;}
-    .way-1p {position: relative;
-        width: 100%;aspect-ratio: 1 / 1;
+    .way-1p {
+        position: relative;
+        width: 100%;
+        aspect-ratio: 1 / 1;
+        /* aspect-ratio: unset !important; */
+        /* position: static !important; */
         flex-direction: column;margin-bottom: 3rem;
         background: #000;
     }
     .way-1p>div {
-        position: absolute;top: 0;left: 0;right: 0;bottom: 0;display: flex;flex-direction: column;
+        position: absolute;top: 0;left: 0;right: 0;bottom: 0;
+        display: flex;flex-direction: column;
         background: rgba(0, 0, 0, 0.6);
+        /* position: static !important; */
+        /* background: transparent !important; */
     }
     .way-1p .txt {
         display: flex;flex-direction: column;
@@ -828,15 +851,26 @@ header::before {
         position: absolute;top: 0;left: 0;right: 0;
         width: 100%;height: 100%;
         object-fit: cover;
+        /* position: static !important; */
+        /* width: 100% !important; */
+        /* height: auto !important; */
     }
-    .way-2p {position: relative;
-        height: 100%;aspect-ratio: 1 / 1;
+    .way-2p {
+        position: relative;
+        height: 100%;
+        /* aspect-ratio: unset !important; */
+        /* position: static !important; */
+        aspect-ratio: 1 / 1;
         flex-direction: column;margin-bottom: 0;
         background: #000;
     }
     .way-2p>div {
-        position: absolute;top: 0;left: 0;right: 0;bottom: 0;display: flex;flex-direction: column;
-        z-index: 5;background: rgba(0, 0, 0, 0.6);
+        position: absolute;top: 0;left: 0;right: 0;bottom: 0;
+        display: flex;flex-direction: column;
+        z-index: 5;
+        background: rgba(0, 0, 0, 0.6);
+        /* position: static !important; */
+        /* background: transparent !important; */
     }
     .way-2p .txt {
         display: flex;flex-direction: column;
@@ -849,8 +883,12 @@ header::before {
         position: absolute;top: 0;left: 0;right: 0;
         height: 100%;aspect-ratio: 1 / 1;
         object-fit: cover;
+        /* position: static !important; */
+        /* width: 100% !important; */
+        /* height: auto !important; */
     }
 }
+
 
 @media screen and (max-width: 600px) {
     .way-swiper .swiper-slide {width: 20rem;height: 20rem;}

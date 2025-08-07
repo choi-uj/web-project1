@@ -4,50 +4,59 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
-import "swiper/css";
+// import "swiper/css";
 
 gsap.registerPlugin(ScrollTrigger);
 
+
 function Vision() {
-    const swiperRef = useRef(null);
-
-    const baseImages = [
-        "/img/image01.webp", "/img/image13.webp", "/img/image02.webp",
-        "/img/image11.webp", "/img/image03.webp", "/img/image10.webp",
-        "/img/image04.webp", "/img/image09.webp", "/img/image06.webp",
-        "/img/image08.webp", "/img/image07.webp"
-    ];
-    
-    const images = [...baseImages, ...baseImages, ...baseImages];
-    const shouldLoop = images.length > 10;
-
+//     const images = [
+//     "/img/image01.webp","/img/image13.webp","/img/image02.webp","/img/image11.webp","/img/image03.webp","/img/image10.webp","/img/image04.webp","/img/image09.webp","/img/image06.webp","/img/image08.webp","/img/image07.webp",
+//     // 필요한 만큼 추가
+// ];
     useEffect(() => {
-        const swiper = swiperRef.current?.swiper;
-        if (swiper) {
-            swiper.update();
-            swiper.autoplay?.start();
-        }
-
-        // GSAP 애니메이션 (way-1p)
-        gsap.timeline({
+        const way1p = gsap.timeline({
             scrollTrigger: {
-                trigger: ".way-1p",
-                start: "top 60%",
+                trigger: '.way-1p',
+                start: 'top 80%',
+                // markers: true,
             }
-        })
-        .from(".way-1p img", { scale: 0.95, opacity: 0, duration: 0.6 })
-        .from(".way-1p .txt", { opacity: 0, x: 100, duration: 0.6 }, "-=0.4");
+        });
+        way1p.fromTo('.way-1p img',
+            { scale: 0.95, opacity: 0 },
+            { scale: 1, opacity: 1, duration: 0.6 }
+        ).fromTo('.way-1p .txt',
+            { opacity: 0, x: 100 },
+            { opacity: 1, x: 0, duration: 0.6 }
+        );
 
-        // GSAP 애니메이션 (way-2p)
-        gsap.timeline({
+        const way2p = gsap.timeline({
             scrollTrigger: {
-                trigger: ".way-2p",
-                start: "top 60%",
+                trigger: '.way-2p',
+                start: 'top 80%',
+                // markers: true,
             }
-        })
-        .from(".way-2p img", { scale: 0.95, opacity: 0, duration: 0.6 })
-        .from(".way-2p .txt", { opacity: 0, x: -100, duration: 0.6 }, "-=0.4");
+        });
+        way2p.fromTo('.way-2p img',
+            { scale: 0.95, opacity: 0 },
+            { scale: 1, opacity: 1, duration: 0.6 }
+        ).fromTo('.way-2p .txt',
+            { opacity: 0, x: -100 },
+            { opacity: 1, x: 0, duration: 0.6 }
+        );
 
+        requestAnimationFrame(() => {
+            ScrollTrigger.refresh(); // 렌더 직후
+        });
+
+        const refreshTimeout = setTimeout(() => {
+            ScrollTrigger.refresh(); // 스크롤 위치 재계산 (지연)
+        }, 1000);
+
+        return () => {
+            clearTimeout(refreshTimeout);
+            ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+        };
     }, []);
 
     return (
@@ -61,14 +70,13 @@ function Vision() {
                         </strong>
                     </hgroup>
 
-                    <Swiper
-                        ref={swiperRef}
+                    {/* <Swiper
                         className="way-swiper"
                         modules={[Autoplay]}
-                        loop={shouldLoop}
-                        autoplay={{ delay: 1, disableOnInteraction: false }}
-                        slidesPerView="3"
-                        speed={5000}
+                        loop={true}
+                        autoplay={{ delay: 0, disableOnInteraction: false }}
+                        slidesPerView={3} // ✅ auto → 고정값
+                        speed={3000}
                         spaceBetween={40}
                     >
                         {images.map((src, idx) => (
@@ -76,7 +84,7 @@ function Vision() {
                                 <img src={src} alt={`vision-${idx}`} />
                             </SwiperSlide>
                         ))}
-                    </Swiper>
+                    </Swiper> */}
                 </div>
 
                 <div className="way-1p">
