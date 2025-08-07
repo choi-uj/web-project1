@@ -7,11 +7,15 @@
     --deepblue: #003285;
     --blue: #2A629A;
     --yellow: #DDDA78;
+    margin: 0;padding: 0;
+    overflow-x: hidden; overflow-y: auto;
 }
 body {
     font-family: 'Wanted Sans', 'SUIT', 'Pretendard', '맑은 고딕', sans-serif, 'Noto Serif KR';
     color: #333;
     font-size: 1.6rem;
+    margin: 0;padding: 0;
+    overflow-x: hidden; overflow-y: auto;
 }
 .container {padding: 10rem 20rem;}
 .blind {
@@ -92,7 +96,7 @@ hgroup p {margin-top: 3rem;
 #gnb .dep1 {display: flex;flex-direction: row;}
 #gnb .dep1 li {position: relative;}
 #gnb .dep1>li>a {
-    padding: 2.8rem 4rem;
+    padding: 2.8rem 3.6rem;
     font-weight: 700;font-size: 2rem;
 }
 #gnb .dep1>li:hover {color: var(--orange);}
@@ -136,7 +140,7 @@ hgroup p {margin-top: 3rem;
 .header-util .menu-wrap{
     position: relative;width: 28px;height: 16px;
     cursor: pointer;z-index: 30;
-    background: red;
+    /* background: red; */
 }
 .header-util .menu-wrap .line{
     position: absolute;width: 100%;height: 2px;
@@ -170,7 +174,7 @@ hgroup p {margin-top: 3rem;
 
 /* scroll */
 
-header.scroll {
+#header.scroll {
     background: #FFF;
     transition: background 0.3s;
 }
@@ -180,26 +184,26 @@ header::before {
     background: #fff;height: 0;
     transition: all 0.3s;
 }
-header.scroll-a::before {height: 20rem;}
-header.scroll h1 a {
+#header.scroll-a::before {height: 20rem;}
+#header.scroll h1 a {
     background: url(/img/Mainlogo-black.png) 0 0 / 100% auto !important;
 }
-header.scroll #gnb .dep1>li>a {color: #333;}
-header.scroll-a #gnb .dep2 {
+#header.scroll #gnb .dep1>li>a {color: #333;}
+#header.scroll-a #gnb .dep2 {
     height: 30rem;
 }
-header.scroll .header-util {color: #333;}
-header.scroll .menu-wrap .line {background: #333;}
+#header.scroll .header-util {color: #333;}
+#header.scroll .menu-wrap .line {background: #333;}
 
 @media screen and (max-width: 1440px) {
     #header .container {padding: 0 8rem;}
     #gnb {display: none;}
-    header.scroll-a {position: relative;}
-    header.scroll-a::before {height: 40rem;}
-    header.scroll-a #gnb {
+    #header.scroll-a {position: relative;}
+    #header.scroll-a::before {height: 40rem;}
+    #header.scroll-a #gnb {
         position: absolute;
         display: flex;padding-top: 20rem;
-        justify-content: center;align-items: center;width: 100vw;margin-left: -8rem;
+        justify-content: center;align-items: center;width: 100vw;margin-left: -4rem;
     }
     #gnb .dep1 li {
         text-align: center;width: 20rem;
@@ -217,18 +221,17 @@ header.scroll .menu-wrap .line {background: #333;}
 }
 @media screen and (max-width: 970px) {
     #header .container {padding: 0 3rem;}
-    header.scroll-a {
-        overflow-y: auto; /* 스크롤 활성화 */
+    #header.scroll-a {
         height: 100vh;
+        overflow: hidden;
     }
-    header.scroll-a::before {height: 100vh;}
-    header.scroll-a #gnb {
+    #header.scroll-a::before {height: 100vh;}
+    #header.scroll-a #gnb {
         display: flex;flex-direction: column;
         position: absolute;
         top: 8rem;left: 0;right: 0;
         height: calc(100vh - 8rem);
-        overflow-y: auto;
-        /* background: white; 필요 시 */
+        overflow: hidden;
         z-index: 99;
     }
     #gnb .dep1 {
@@ -248,7 +251,7 @@ header.scroll .menu-wrap .line {background: #333;}
         width: 90vw;
         /* border: 1px solid #ff0000; */
     }
-    header.scroll-a #gnb .dep2 {height: 8rem;
+    #header.scroll-a #gnb .dep2 {height: 8rem;
     }
     #gnb .dep2 li {
         justify-content: start;
@@ -608,6 +611,7 @@ header.scroll .menu-wrap .line {background: #333;}
 
 /* 브랜드 */
 .brand {
+    width: 100vw;
     background: url(/img/m02.jfif) center no-repeat;
     background-size: 100% auto;
     object-fit: cover;
@@ -715,7 +719,7 @@ header.scroll .menu-wrap .line {background: #333;}
 .way {background: #efefef;overflow-x: hidden;}
 .way-main {position: relative;height: 100%;padding: 10rem 0;}
 /* .way-swiper {width: 100%;height: 100%;margin: auto;} */
-.way-swiper.swiper {width: 100%;height: auto;margin: auto;}
+.way-swiper.swiper {width: 100%;height: auto;margin: auto;overflow: hidden;}
 .way-swiper .swiper-wrapper {
     display: flex !important; /* 추가 */
     transition-timing-function: linear;
@@ -832,7 +836,10 @@ header.scroll .menu-wrap .line {background: #333;}
 }
 
 /* 뉴스 */
-.news {background: #fff;overflow-x: hidden;}
+.news {
+    width: 100vw;
+    background: #fff;overflow-x: hidden;
+}
 .news .container {
     display: flex;flex-direction: row;
     justify-content: space-between;
@@ -851,16 +858,23 @@ header.scroll .menu-wrap .line {background: #333;}
 }
 
 
-.news-list {width: 50vw;}
+.news-list {
+    width: 50vw;
+}
 .news ul {
     display: flex;flex-direction: column;
     justify-content: space-between;
 }
-.news li {width: 100%;}
+.news li {
+    width: 100%;
+    display: flex;
+    visibility: visible;
+    transition: all 0.3s;
+}
 .news li a {
     display: flex;flex-direction: row;
     justify-content: space-between;align-items: center;
-    padding: 2rem 0;font-size: 3.2rem;
+    padding: 2rem 0;font-size: 3.2rem;width: 100%;
     border-bottom: 1px solid #ddd;
 }
 .news .date {
@@ -886,6 +900,7 @@ header.scroll .menu-wrap .line {background: #333;}
 }
 .news .news-txt p {font-size: 2rem;color: #aaa;overflow: hidden;text-overflow: ellipsis;}
 .news img {width: 20rem;aspect-ratio: 1 / 1;border-radius: 2rem;}
+
 @media screen and (max-width: 1700px) {
     .news .container {flex-direction: column;}
     .news-page {
@@ -906,8 +921,16 @@ header.scroll .menu-wrap .line {background: #333;}
     .news img {width: 15rem;}
 }
 @media screen and (max-width: 800px) {
-    
+    .news {
+        padding: 0 3rem;  /* 양쪽 여백 */
+        overflow-x: hidden;
+    }
     .news ul {padding-bottom: 3rem;}
+    .news-list {
+        width: 100%;
+        max-width: 700px;  /* 또는 적당한 크기 */
+        box-sizing: border-box;
+    }
     .news li a {
         display: flex;flex-direction: column;
         padding: 3rem;
@@ -921,7 +944,7 @@ header.scroll .menu-wrap .line {background: #333;}
 /* 인재채용 */
 .hiring {
     position: relative;
-    width: 100%;height: 100vh; display: flex;flex-direction: column;
+    width: 100vw;height: 100vh; display: flex;flex-direction: column;
     justify-content: center;align-items: center;
     background: var(--blue);
 }

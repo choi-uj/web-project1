@@ -274,28 +274,28 @@ document.addEventListener("DOMContentLoaded", function () {
 // });
 
 
-history.from('.history li:nth-child(1)', {opacity: 0, x: 1000, duration: 0.3})    
-        .from('.history li:nth-child(2)', {opacity: 0, x: 1000, duration: 0.3}) 
-        .from('.history li:nth-child(3)', {opacity: 0, x: 1000, duration: 0.3}) 
-        .from('.history li:nth-child(4)', {opacity: 0, x: 1000, duration: 0.3}) 
-        .from('.history li:nth-child(5)', {opacity: 0, x: 1000, duration: 0.3}) 
+// history.from('.history li:nth-child(1)', {opacity: 0, x: 1000, duration: 0.3})    
+//         .from('.history li:nth-child(2)', {opacity: 0, x: 1000, duration: 0.3}) 
+//         .from('.history li:nth-child(3)', {opacity: 0, x: 1000, duration: 0.3}) 
+//         .from('.history li:nth-child(4)', {opacity: 0, x: 1000, duration: 0.3}) 
+//         .from('.history li:nth-child(5)', {opacity: 0, x: 1000, duration: 0.3}) 
         // .from('.history li:nth-child(6)', {opacity: 0, x: 1000, duration: 0.3}) 
     
 
 /* 브랜드 */
 
 
-const brand = gsap.utils.toArray('.brand-list');
+// const brand = gsap.utils.toArray('.brand-list');
 
-brand.forEach(brand => {
-    gsap.from(brand, {
-        y: 100, opacity: 0, delay: 1, duration: 0.5,
-        scrollTrigger: {
-            trigger: '.brand .container',
-            start: 'top 30%',
-        }
-    })
-});
+// brand.forEach(brand => {
+//     gsap.from(brand, {
+//         y: 100, opacity: 0, delay: 1, duration: 0.5,
+//         scrollTrigger: {
+//             trigger: '.brand .container',
+//             start: 'top 30%',
+//         }
+//     })
+// });
 
 
 /* 비전 */
@@ -308,37 +308,37 @@ brand.forEach(brand => {
 //         spaceBetween: 40,
 //     });
 
-const swiperVision = new Swiper(".way-swiper", {
-    loop: true,
-    autoplay: { delay: 0 },
-    slidesPerView: 'auto',
-    speed: 3000,
-    spaceBetween: 40,
-    on: {
-        slideChange: function() {
-            // 슬라이드 변경 시 GSAP 애니메이션 실행
-            gsap.to('.swiper-slide-active', { opacity: 1, duration: 1 });
-        }
-    }
-});    
+// const swiperVision = new Swiper(".way-swiper", {
+//     loop: true,
+//     autoplay: { delay: 0 },
+//     slidesPerView: 'auto',
+//     speed: 3000,
+//     spaceBetween: 40,
+//     on: {
+//         slideChange: function() {
+//             // 슬라이드 변경 시 GSAP 애니메이션 실행
+//             gsap.to('.swiper-slide-active', { opacity: 1, duration: 1 });
+//         }
+//     }
+// });    
 
-const way1p = gsap.timeline({
-  scrollTrigger: {
-        trigger: '.way-1p',
-        start: 'top 50%'
-    }
-});
-way1p.from('.way-1p img', {scale: 0.95,opacity: 0})
-    .from('.way-1p .txt', {opacity: 0, x: 1000})
+// const way1p = gsap.timeline({
+//   scrollTrigger: {
+//         trigger: '.way-1p',
+//         start: 'top 50%'
+//     }
+// });
+// way1p.from('.way-1p img', {scale: 0.95,opacity: 0})
+//     .from('.way-1p .txt', {opacity: 0, x: 1000})
 
-const way2p = gsap.timeline({
-  scrollTrigger: {
-        trigger: '.way-2p',
-        start: 'top 50%'
-    }
-});
-way2p.from('.way-2p img', {scale: 0.95,opacity: 0})
-    .from('.way-2p .txt', {opacity: 0, x: -1000})
+// const way2p = gsap.timeline({
+//   scrollTrigger: {
+//         trigger: '.way-2p',
+//         start: 'top 50%'
+//     }
+// });
+// way2p.from('.way-2p img', {scale: 0.95,opacity: 0})
+//     .from('.way-2p .txt', {opacity: 0, x: -1000})
     
 
 
@@ -346,15 +346,15 @@ way2p.from('.way-2p img', {scale: 0.95,opacity: 0})
 
 
 
-const news = gsap.timeline({
-  scrollTrigger: {
-        trigger: '.news',
-        start: 'top 40%'
-    }
-});
-news.from('.news-list li:nth-child(1)', {opacity: 0, x: 1000, duration: 0.3})    
-    .from('.news-list li:nth-child(2)', {opacity: 0, x: 1000, duration: 0.3}) 
-    .from('.news-list li:nth-child(3)', {opacity: 0, x: 1000, duration: 0.3}) 
+// const news = gsap.timeline({
+//   scrollTrigger: {
+//         trigger: '.news',
+//         start: 'top 40%'
+//     }
+// });
+// news.from('.news-list li:nth-child(1)', {opacity: 0, x: 1000, duration: 0.3})    
+//     .from('.news-list li:nth-child(2)', {opacity: 0, x: 1000, duration: 0.3}) 
+//     .from('.news-list li:nth-child(3)', {opacity: 0, x: 1000, duration: 0.3}) 
 
 
 /* 인재채용 */

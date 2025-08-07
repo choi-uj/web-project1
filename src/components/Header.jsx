@@ -2,53 +2,54 @@
 import React, { useState, useEffect, useRef } from "react";
 
 function Header() {
-    const [menuOpen, setMenuOpen] = useState(false); // 메뉴 버튼 열림 여부
+    const [menuOpen, setMenuOpen] = useState(false);
     const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 1440);
-    const [isScrolled, setIsScrolled] = useState(false); // 스크롤 여부 상태
     const headerRef = useRef(null);
     const gnbRef = useRef(null);
     const langWrapRef = useRef(null);
     const hBreakpoint = 1440;
 
-    const toggleMenu = () => {
+    const updateScrollClass = () => {
         const header = headerRef.current;
-        setMenuOpen(prev => {
-            const newState = !prev;
+        if (!header) return;
 
-            if (header) {
-                if (newState) {
-                    header.classList.add('scroll');
-                    header.classList.add('scroll-a');
-                } else {
-                    if (window.scrollY < header.offsetHeight) {
-                        header.classList.remove('scroll');
-                    }
-                    header.classList.remove('scroll-a');
-                }
+        const scrolled = window.scrollY > 0;
+
+        if (scrolled || menuOpen) {
+            header.classList.add("scroll");
+        } else {
+            header.classList.remove("scroll");
+        }
+    };
+
+    const toggleMenu = () => {
+        setMenuOpen(prev => {
+            const next = !prev;
+            const header = headerRef.current;
+            if (!header) return next;
+
+            if (next) {
+                // 메뉴 열림
+                header.classList.add("scroll", "scroll-a");
+            } else {
+                // 메뉴 닫힘
+                header.classList.remove("scroll-a");
+                // scroll 상태 재확인
+                updateScrollClass();
             }
 
-            return newState;
+            return next;
         });
     };
 
     const toggleLang = () => {
         if (langWrapRef.current) {
-            langWrapRef.current.classList.toggle('active');
+            langWrapRef.current.classList.toggle("active");
         }
     };
 
     const handleScroll = () => {
-        const header = headerRef.current;
-        if (!header) return;
-
-        const shouldScroll = window.scrollY >= header.offsetHeight;
-        setIsScrolled(shouldScroll); // 상태 업데이트
-
-        if (shouldScroll) {
-            header.classList.add('scroll');
-        } else {
-            header.classList.remove('scroll');
-        }
+        updateScrollClass();
     };
 
     useEffect(() => {
@@ -56,44 +57,51 @@ function Header() {
             setIsDesktop(window.innerWidth >= hBreakpoint);
         };
 
-        const header = headerRef.current;
-        const gnb = gnbRef.current;
-
         window.addEventListener('scroll', handleScroll);
         window.addEventListener('resize', handleResize);
-
-        if (isDesktop && gnb) {
-            const onMouseEnter = () => {
-                header.classList.add('scroll', 'scroll-a');
-            };
-            const onMouseLeave = () => {
-                header.classList.remove('scroll-a');
-                if (window.scrollY >= header.offsetHeight) {
-                    header.classList.add('scroll');
-                } else {
-                    header.classList.remove('scroll');
-                }
-            };
-            gnb.addEventListener('mouseenter', onMouseEnter);
-            gnb.addEventListener('mouseleave', onMouseLeave);
-
-            return () => {
-                gnb.removeEventListener('mouseenter', onMouseEnter);
-                gnb.removeEventListener('mouseleave', onMouseLeave);
-            };
-        }
 
         return () => {
             window.removeEventListener('scroll', handleScroll);
             window.removeEventListener('resize', handleResize);
         };
-    }, [isDesktop]);
+    }, []);
+
+    // ⬇️ gnb hover 처리
+    useEffect(() => {
+        const gnb = gnbRef.current;
+        const header = headerRef.current;
+        if (!gnb || !header || !isDesktop) return;
+
+        const onMouseEnter = () => {
+            header.classList.add("scroll", "scroll-a");
+        };
+
+        const onMouseLeave = () => {
+            if (!menuOpen) {
+                header.classList.remove("scroll-a");
+                updateScrollClass();
+            }
+        };
+
+        gnb.addEventListener("mouseenter", onMouseEnter);
+        gnb.addEventListener("mouseleave", onMouseLeave);
+
+        return () => {
+            gnb.removeEventListener("mouseenter", onMouseEnter);
+            gnb.removeEventListener("mouseleave", onMouseLeave);
+        };
+    }, [isDesktop, menuOpen]);
+
+    // ⬇️ 메뉴 상태가 바뀔 때 scroll 상태 다시 적용
+    useEffect(() => {
+        updateScrollClass();
+    }, [menuOpen]);
 
     return (
         <header
             id="header"
             ref={headerRef}
-            className={`${isScrolled ? 'scroll' : ''} ${menuOpen ? 'scroll-a' : ''}`}
+            className={`${menuOpen ? 'scroll-a scroll' : ''}`}
         >
             <div className="container">
                 <h1><a href="/"><span className="blind">워로브라더스</span></a></h1>
