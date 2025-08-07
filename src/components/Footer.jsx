@@ -21,7 +21,7 @@ function Footer() {
                     </address>
                     <div className="family-link">
                         <div className="family-site">
-                        <button onClick={toggleFamilySite}>FAMILY SITE</button>
+                        <button className="family-button" onClick={toggleFamilySite}>FAMILY SITE</button>
                             <ul className={isFamilySiteOpen ? "active" : ""}>
                                 <li><a href="https://brand.naver.com/vendict?" target="_blank">VENDICT</a></li>
                                 <li><a href="https://smartstore.naver.com/wallowshop?" target="_blank">WALLOW</a></li>

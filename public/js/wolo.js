@@ -98,11 +98,11 @@ gsap.registerPlugin(ScrollTrigger)
 // });
 
 /* 푸터 */
-const familyBtn = document.querySelector('.family-link .family-site button')
-const familyList = document.querySelector('.family-link .family-site')
-familyBtn.addEventListener('click', function() {
-    familyList.classList.toggle('active')
-})
+// const familyBtn = document.querySelector('.family-link .family-site button')
+// const familyList = document.querySelector('.family-link .family-site')
+// familyBtn.addEventListener('click', function() {
+//     familyList.classList.toggle('active')
+// })
 
 /* 섹션 */
 // 예시: useEffect를 제거하고 DOM을 직접 조작

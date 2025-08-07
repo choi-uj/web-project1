@@ -3,43 +3,43 @@ import React, { useState, useEffect, useRef } from "react";
 
 function Header() {
     const [menuOpen, setMenuOpen] = useState(false);
+    const [scrolled, setScrolled] = useState(false);
     const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 1440);
-    const headerRef = useRef(null);
-    const gnbRef = useRef(null);
+
+    const headerRef = useRef(null);      // 여기에 추가
+    const gnbRef = useRef(null);        // 여기 선언 필수
     const langWrapRef = useRef(null);
     const hBreakpoint = 1440;
 
-    const updateScrollClass = () => {
-        const header = headerRef.current;
-        if (!header) return;
+    useEffect(() => {
+        const onScroll = () => {
+            setScrolled(window.scrollY > 0);
+        };
+        window.addEventListener('scroll', onScroll);
 
-        const scrolled = window.scrollY > 0;
+        return () => {
+            window.removeEventListener('scroll', onScroll);
+        };
+    }, []);
 
-        if (scrolled || menuOpen) {
-            header.classList.add("scroll");
-        } else {
-            header.classList.remove("scroll");
-        }
-    };
+    useEffect(() => {
+        const onResize = () => {
+            setIsDesktop(window.innerWidth >= hBreakpoint);
+        };
+        window.addEventListener('resize', onResize);
+
+        return () => {
+            window.removeEventListener('resize', onResize);
+        };
+    }, []);
 
     const toggleMenu = () => {
-        setMenuOpen(prev => {
-            const next = !prev;
-            const header = headerRef.current;
-            if (!header) return next;
+        setMenuOpen(prev => !prev);
+    };
 
-            if (next) {
-                // 메뉴 열림
-                header.classList.add("scroll", "scroll-a");
-            } else {
-                // 메뉴 닫힘
-                header.classList.remove("scroll-a");
-                // scroll 상태 재확인
-                updateScrollClass();
-            }
-
-            return next;
-        });
+    const handleMenuClick = (e) => {
+        e.preventDefault();
+        toggleMenu();
     };
 
     const toggleLang = () => {
@@ -48,64 +48,32 @@ function Header() {
         }
     };
 
-    const handleScroll = () => {
-        updateScrollClass();
+    const handleGnbMouseEnter = () => {
+        if (isDesktop) {
+            setScrolled(true);
+            setMenuOpen(true);
+        }
     };
 
-    useEffect(() => {
-        const handleResize = () => {
-            setIsDesktop(window.innerWidth >= hBreakpoint);
-        };
-
-        window.addEventListener('scroll', handleScroll);
-        window.addEventListener('resize', handleResize);
-
-        return () => {
-            window.removeEventListener('scroll', handleScroll);
-            window.removeEventListener('resize', handleResize);
-        };
-    }, []);
-
-    // ⬇️ gnb hover 처리
-    useEffect(() => {
-        const gnb = gnbRef.current;
-        const header = headerRef.current;
-        if (!gnb || !header || !isDesktop) return;
-
-        const onMouseEnter = () => {
-            header.classList.add("scroll", "scroll-a");
-        };
-
-        const onMouseLeave = () => {
-            if (!menuOpen) {
-                header.classList.remove("scroll-a");
-                updateScrollClass();
-            }
-        };
-
-        gnb.addEventListener("mouseenter", onMouseEnter);
-        gnb.addEventListener("mouseleave", onMouseLeave);
-
-        return () => {
-            gnb.removeEventListener("mouseenter", onMouseEnter);
-            gnb.removeEventListener("mouseleave", onMouseLeave);
-        };
-    }, [isDesktop, menuOpen]);
-
-    // ⬇️ 메뉴 상태가 바뀔 때 scroll 상태 다시 적용
-    useEffect(() => {
-        updateScrollClass();
-    }, [menuOpen]);
+    const handleGnbMouseLeave = () => {
+        if (isDesktop) {
+            setMenuOpen(false);
+            setScrolled(window.scrollY > 0);
+        }
+    };
 
     return (
         <header
             id="header"
             ref={headerRef}
-            className={`${menuOpen ? 'scroll-a scroll' : ''}`}
+            className={`${scrolled ? 'scroll' : ''} ${menuOpen ? 'scroll-a' : ''}`}
         >
             <div className="container">
                 <h1><a href="/"><span className="blind">워로브라더스</span></a></h1>
-                <nav id="gnb" ref={gnbRef}>
+                <nav id="gnb"
+                    ref={gnbRef}
+                    onMouseEnter={handleGnbMouseEnter}
+                    onMouseLeave={handleGnbMouseLeave}>
                     <ul className="dep1">
                         <li><a href="#go-history">Company</a>
                             <ul className="dep2">
@@ -141,7 +109,7 @@ function Header() {
                 </nav>
                 <div className="header-util">
                     <div className="lang-wrap" ref={langWrapRef}>
-                        <button onClick={toggleLang}>
+                        <button className="lang-button" onClick={toggleLang}>
                             <i className="ri-global-line"></i>
                             <span className="blind">KOR</span>
                         </button>

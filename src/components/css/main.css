@@ -78,13 +78,18 @@ hgroup p {margin-top: 3rem;
 /* header */ 
 #header {
     position: fixed;left: 0;right: 0;top: 0;
-    z-index: 1000;
+    z-index: 2000;
+    height: 8rem;                /* 💡 고정 높이 */
     color: #fff;
     /* background: rgba(0,0,0,0.1); */
     backdrop-filter: blur(8px);
+    transition: height 0.3s ease;
 }
 #header .container {
-    display: flex;flex-direction: row;justify-content: space-between;padding: 0 20rem;align-items: center;height: 8rem;
+    display: flex;flex-direction: row;justify-content: space-between;padding: 0 20rem;align-items: center;
+    height: 100%;                /* 💡 header와 동일한 높이 */
+    box-sizing: border-box;
+
 }
 #header h1 a {
     display: block;
@@ -109,7 +114,7 @@ hgroup p {margin-top: 3rem;
     display: flex;
     flex-direction: column;
     justify-self: center;align-items: center;
-    position: absolute;height: 1px;width: 12rem;
+    position: absolute;height: 0;width: 12rem;
     top: 4rem;left: 0;right: 0;color: #999;
     overflow: hidden;transition: all 0.3s;
 }
@@ -123,6 +128,11 @@ hgroup p {margin-top: 3rem;
     align-items: center;
     gap: 3rem;font-size: 2.4rem;
 }
+.lang-button:focus,
+.lang-button:active {
+    outline: none;
+    box-shadow: none;
+}
 .header-util .lang-wrap {position: relative;}
 .header-util .lang-wrap ul {
     display: none;
@@ -130,7 +140,7 @@ hgroup p {margin-top: 3rem;
     flex-direction: column;
     position: absolute;gap: 1.5rem;
     width: auto;padding: 2rem;left: 50%;
-    transform: translateX(-50%); top: 3rem;
+    transform: translateX(-50%); top: 5rem;
     border-radius: 1rem;background: #fff;
     font-weight: 600;font-size: 1.6rem;color: #999;
 }
@@ -189,6 +199,7 @@ header::before {
     background: url(/img/Mainlogo-black.png) 0 0 / 100% auto !important;
 }
 #header.scroll #gnb .dep1>li>a {color: #333;}
+
 #header.scroll-a #gnb .dep2 {
     height: 30rem;
 }
@@ -198,7 +209,6 @@ header::before {
 @media screen and (max-width: 1440px) {
     #header .container {padding: 0 8rem;}
     #gnb {display: none;}
-    #header.scroll-a {position: relative;}
     #header.scroll-a::before {height: 40rem;}
     #header.scroll-a #gnb {
         position: absolute;
@@ -220,10 +230,21 @@ header::before {
   }
 }
 @media screen and (max-width: 970px) {
+    #header {position: fixed;}
     #header .container {padding: 0 3rem;}
+    
+    header.scroll {
+        position: fixed;
+        top: 0;left: 0;right: 0;
+        height: 8rem; /* 기존 헤더 높이와 맞추기 */
+        background: #fff;
+        z-index: 2000;
+        transform: none !important;
+    }
     #header.scroll-a {
-        height: 100vh;
-        overflow: hidden;
+        height: 8rem; /* ✅ 기존 header 높이 유지 */position: fixed;overflow: visible;
+        top: 0; left: 0; right: 0;
+        z-index: 2000; /* 메뉴가 2000이면 닫기 버튼은 2001로 위에 있음 */
     }
     #header.scroll-a::before {height: 100vh;}
     #header.scroll-a #gnb {
@@ -232,7 +253,8 @@ header::before {
         top: 8rem;left: 0;right: 0;
         height: calc(100vh - 8rem);
         overflow: hidden;
-        z-index: 99;
+        background: white; /* 배경 추가 */
+        z-index: 1999;
     }
     #gnb .dep1 {
         position: absolute;top: 3rem;left: 5rem;
@@ -314,6 +336,11 @@ header::before {
 }
 .family-site ul.active {
     display: flex;max-height: 20rem;
+}
+.family-button:focus,
+.family-button:active {
+    outline: none;
+    box-shadow: none;
 }
 .family-link .family-site li:hover {
     color: var(--orange);font-weight: 900;
