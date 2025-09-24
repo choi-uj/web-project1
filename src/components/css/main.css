@@ -16,6 +16,7 @@ body {
     font-size: 1.6rem;
     margin: 0;padding: 0;
     overflow-x: hidden; overflow-y: auto;
+    width: 100vw;
 }
 .container {padding: 10rem 20rem;}
 .blind {
@@ -78,10 +79,9 @@ hgroup p {margin-top: 3rem;
 /* header */ 
 #header {
     position: fixed;left: 0;right: 0;top: 0;
-    z-index: 2000;
+    z-index: 2000;width: 100vw;
     height: 8rem;                /* 💡 고정 높이 */
     color: #fff;
-    /* background: rgba(0,0,0,0.1); */
     backdrop-filter: blur(8px);
     transition: height 0.3s ease;
 }
@@ -89,7 +89,7 @@ hgroup p {margin-top: 3rem;
     display: flex;flex-direction: row;justify-content: space-between;padding: 0 20rem;align-items: center;
     height: 100%;                /* 💡 header와 동일한 높이 */
     box-sizing: border-box;
-
+    overflow: hidden;
 }
 #header h1 a {
     display: block;
@@ -99,7 +99,7 @@ hgroup p {margin-top: 3rem;
     /* border: 1px solid #f10000; */
 }
 #gnb .dep1 {display: flex;flex-direction: row;}
-#gnb .dep1 li {position: relative;}
+#gnb .dep1 li {position: static;text-align: center;}
 #gnb .dep1>li>a {
     padding: 2.8rem 3.6rem;
     font-weight: 700;font-size: 2rem;
@@ -112,13 +112,15 @@ hgroup p {margin-top: 3rem;
 #gnb .dep2 {
     /* display: none; */
     display: flex;
-    flex-direction: column;
+    flex-direction: column;z-index: 3000;
     justify-self: center;align-items: center;
-    position: absolute;height: 0;width: 12rem;
-    top: 4rem;left: 0;right: 0;color: #999;
+    height: 0;
+    position: fixed;
+    top: 9rem;margin-left: 15rem;
+    color: #999;
     overflow: hidden;transition: all 0.3s;
 }
-#gnb .dep2 li {padding: 2rem 0;}
+#gnb .dep2 li {padding: 1.6rem 2rem;}
 #gnb .dep2 a {font-size: 1.6rem;font-weight: 700;}
 #gnb .dep2>li:hover a {color: var(--orange);}
 
@@ -133,18 +135,22 @@ hgroup p {margin-top: 3rem;
     outline: none;
     box-shadow: none;
 }
-.header-util .lang-wrap {position: relative;}
+.header-util .lang-wrap {position: static;}
 .header-util .lang-wrap ul {
     display: none;
     /* display: flex; */
+    position: fixed;z-index: 3000;
+
     flex-direction: column;
-    position: absolute;gap: 1.5rem;
-    width: auto;padding: 2rem;left: 50%;
-    transform: translateX(-50%); top: 5rem;
+    gap: 1.5rem;right: 19rem;
+    width: auto;padding: 2rem;
+    transform: translateX(-50%);
     border-radius: 1rem;background: #fff;
     font-weight: 600;font-size: 1.6rem;color: #999;
 }
-.header-util .lang-wrap.active ul {display: flex;}
+.header-util .lang-wrap.active ul {
+    display: flex;
+}
 .header-util .lang-wrap li:hover {color: var(--orange);}
 
 .header-util .menu-wrap{
@@ -169,6 +175,7 @@ hgroup p {margin-top: 3rem;
     /* 예시: 메뉴가 보이도록 하는 스타일 */
     transform: translateX(0); /* 또는 display: block 등 */
     transition: 0.3s ease;
+    display: block;
 }
 
 .header-util .menu-wrap.open .line:first-child{
@@ -194,14 +201,15 @@ header::before {
     background: #fff;height: 0;
     transition: all 0.3s;
 }
-#header.scroll-a::before {height: 20rem;}
+#header.scroll-a {position: fixed;overflow: visible;}
+#header.scroll-a::before {height: 20rem;z-index: 1000;}
 #header.scroll h1 a {
     background: url(/img/Mainlogo-black.png) 0 0 / 100% auto !important;
 }
 #header.scroll #gnb .dep1>li>a {color: #333;}
 
 #header.scroll-a #gnb .dep2 {
-    height: 30rem;
+    height: 30rem;z-index: 3000;
 }
 #header.scroll .header-util {color: #333;}
 #header.scroll .menu-wrap .line {background: #333;}
@@ -213,20 +221,27 @@ header::before {
     #header.scroll-a #gnb {
         position: absolute;
         display: flex;padding-top: 20rem;
-        justify-content: center;align-items: center;width: 100vw;margin-left: -4rem;
+        justify-content: center;align-items: center;
+        width: 100vw;margin-left: -4rem;
+    }
+    #gnb .dep1 {
+        position: absolute;z-index: 3000;
     }
     #gnb .dep1 li {
         text-align: center;width: 20rem;
-        /* border: 1px solid #00ff95; */
     }
     #gnb .dep1>li>a {
         width: 100%;padding: 2rem 4rem;
-        /* border: 1px solid #ff0000; */
     }
+    #gnb .dep2 {
+        top: 17rem;margin-left: 20rem;
+    }
+    .header-util .lang-wrap ul {right: 7rem;}
 }
 @media screen and (min-width: 971px) {
   #gnb .dep1:hover .dep2 {
     display: flex !important; /* ← 우선순위 높임 */
+    overflow: visible;
   }
 }
 @media screen and (max-width: 970px) {
@@ -257,33 +272,34 @@ header::before {
         z-index: 1999;
     }
     #gnb .dep1 {
-        position: absolute;top: 3rem;left: 5rem;
+        top: 3rem;left: 5rem;
         display: flex;flex-direction: column;gap: 5rem;
         color: #333;        
     }
     #gnb .dep1>li {
         height: 7rem;width: 20rem;padding: 2rem;text-align: start;
+        position: static;
     }
     #gnb .dep1>li>a {padding: 2rem;}
-    #gnb .dep2 {
-        position: absolute;
-        display: flex;flex-direction: row;padding: 0;
-        align-items: start;justify-content: start;
-        top: 5rem;margin-left: 6rem;
-        width: 90vw;
-        /* border: 1px solid #ff0000; */
-    }
-    #header.scroll-a #gnb .dep2 {height: 8rem;
+    #header.scroll-a #gnb .dep2 {
+        height: 70vh;width: 70vw;
+        position: fixed;
+        display: flex;flex-direction: row;
+        justify-content: start;
+        top: 11.5rem;left: -5%;right: 0;
+        border: 1px solid #ff0000;
     }
     #gnb .dep2 li {
-        justify-content: start;
+        justify-content: space-between;
         text-align: start;padding: 2rem 0;width: calc(100% / 3);
     }
     #gnb .dep2 li a {padding: 2rem 0;white-space: nowrap;}
+    .header-util .lang-wrap ul {right: 2.5rem;}
 }
 
+
 /* footer */
-#footer {padding-top: 10rem;}
+#footer {padding-top: 10rem;width: 100vw;}
 #footer .container {
     display: flex;flex-direction: row;
     justify-content: space-between;align-items: center;
@@ -436,7 +452,7 @@ header::before {
     display: flex;
     flex-direction: column;
     justify-content: center;align-items: center;
-    width: 100%;height: 100vh;overflow: hidden;
+    width: 100vw;height: 100vh;overflow: hidden;
     background: #ddd;
 }
 .main-visual hgroup {
@@ -542,7 +558,7 @@ header::before {
 
 /* 판매량 */
 .compet .container {
-    display: flex;flex-direction: column;
+    display: flex;flex-direction: column;width: 100vw;
     gap: 10rem;overflow: hidden;padding-bottom: 10rem;
 }
 .compet hgroup {padding-top: 10rem;}

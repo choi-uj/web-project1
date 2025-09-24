@@ -16,10 +16,7 @@ function Header() {
             setScrolled(window.scrollY > 0);
         };
         window.addEventListener('scroll', onScroll);
-
-        return () => {
-            window.removeEventListener('scroll', onScroll);
-        };
+        return () => window.removeEventListener('scroll', onScroll);
     }, []);
 
     useEffect(() => {
@@ -50,7 +47,6 @@ function Header() {
 
     const handleGnbMouseEnter = () => {
         if (isDesktop) {
-            setScrolled(true);
             setMenuOpen(true);
         }
     };
@@ -58,7 +54,6 @@ function Header() {
     const handleGnbMouseLeave = () => {
         if (isDesktop) {
             setMenuOpen(false);
-            setScrolled(window.scrollY > 0);
         }
     };
 
@@ -66,7 +61,7 @@ function Header() {
         <header
             id="header"
             ref={headerRef}
-            className={`${scrolled ? 'scroll' : ''} ${menuOpen ? 'scroll-a' : ''}`}
+            className={`${(scrolled || menuOpen) ? 'scroll' : ''} ${menuOpen ? 'scroll-a' : ''}`}
         >
             <div className="container">
                 <h1><a href="/"><span className="blind">워로브라더스</span></a></h1>
