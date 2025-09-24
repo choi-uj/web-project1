@@ -45,7 +45,7 @@ function Brand() {
                 <div className="brand-box">
                     <div className="brand-list">
                         <a href="https://brand.naver.com/vendict" alt="VENDICT">
-                            <img src="/img/logo1-.PNG" className="brand-idf" alt="VENDICT" />
+                            <img src="./img/logo1-.PNG" className="brand-idf" alt="VENDICT" />
                             <div className="brand-p">
                                 <h3>Vendict</h3>
                                 <p>
@@ -57,7 +57,7 @@ function Brand() {
                     </div>
                     <div className="brand-list">
                         <a href="https://smartstore.naver.com/wallowshop" alt="WALLOW">
-                            <img src="/img/logo2-.PNG" className="brand-idf" alt="WALLOW" />
+                            <img src="./img/logo2-.PNG" className="brand-idf" alt="WALLOW" />
                             <div className="brand-p">
                                 <h3>Wallow</h3>
                                 <p>

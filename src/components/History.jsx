@@ -11,7 +11,7 @@ function History() {
     useEffect(() => {
         const ctx = gsap.context(() => {
             const items = sectionRef.current.querySelectorAll("li");
-
+ 
             const tl = gsap.timeline({
                 scrollTrigger: {
                     trigger: sectionRef.current,

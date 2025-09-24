@@ -88,7 +88,7 @@ function Vision() {
                 </div>
 
                 <div className="way-1p">
-                    <img src="/img/image05.webp" alt="mission" />
+                    <img src="./img/image05.webp" alt="mission" />
                     <div>
                         <div className="txt">
                             <h3>Mission</h3>
@@ -118,7 +118,7 @@ function Vision() {
                             </span>
                         </div>
                     </div>
-                    <img src="/img/image12.webp" alt="vision" />
+                    <img src="./img/image12.webp" alt="vision" />
                 </div>
             </div>
         </section>
